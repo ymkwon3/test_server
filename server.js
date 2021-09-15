@@ -37,8 +37,10 @@ var server = http.createServer(function(request,res){
             console.log(`body : ${body}`);
             console.log(`statusCode : ${statusCode}`);
 
-            var xmlToJson = convert.xml2json(body, {compact: true, spaces: 4});
-            callBack(xmlToJson);
+            let xmlToJson = JSON.parse(convert.xml2json(body, {compact: true, spaces: 4}));
+            let userInfo = xmlToJson['soap:Envelope']['soap:Body']['GetCharacterInfoByAccountIDResponse']['GetCharacterInfoByAccountIDResult']['diffgr:diffgram']['NewDataSet']['UserInfo'];
+            let json = JSON.stringify(userInfo);
+            callBack(json);
         }catch (error) {
             console.error(error);
         }
